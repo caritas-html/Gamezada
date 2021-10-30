@@ -1,0 +1,17 @@
+{
+  "name": "oscria-game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:caritas-html/Gamezada.git",
+  "author": "Davi Spindola <davispindola2828@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "rollup": "rollup",
+    "rollup:help": "rollup --help",
+    "build": "yarn rollup -c ./config/rollup.config.js"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1",
+    "rollup": "^2.58.3"
+  }
+}
