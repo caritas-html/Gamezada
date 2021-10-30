@@ -32,29 +32,51 @@ const generateMap = (lines, columns) => {
 };
 generateMap(20, 40);
 
-const frameWidth = 64
-const frameHeigth = 100
-const scale = 1
-const fps = 60
-const secondsToUpdate = 1 * fps
-let xPos = 4
-let yPos = 3
-let eachFrame = 0
+class Character {
+  constructor(frameWidth, frameHeigth, scale, fps, xPos, yPos, eachFrame) {
+    this.frameWidth = frameWidth,
+    this.frameHeigth = frameHeigth,
+    this.scale = scale,
+    this.fps = fps
+    this.secondsToUpdate = 1 * fps,
+    this.xPos = xPos,
+    this.yPos = yPos,
+    this.eachFrame = eachFrame
+  }
+}
+const player = new Character(64, 100, 1, 60, 4, 3, 0)
+const demon = new Character(80, 80, 1, 60, 200, 0, 0)
 
-const spriteSheet = new Image()
-spriteSheet.src = "assets/walk.png"
+const playerImage = new Image()
+playerImage.src = "assets/player.png"
+
+const demonImage = new Image()
+demonImage.src = "assets/demonio.png"
+  
+
 
 const animate = () => {
   context.drawImage(
-    spriteSheet,
-    eachFrame,
+    playerImage,
+    player.eachFrame,
     0,
-    frameWidth,
-    frameHeigth,
-    xPos,
-    yPos,
-    frameWidth * scale,
-    frameHeigth * scale
+    player.frameWidth,
+    player.frameHeigth,
+    player.xPos,
+    player.yPos,
+    player.frameWidth *  player.scale,
+    player.frameHeigth * player.scale
+  )
+  context.drawImage(
+    demonImage,
+    demon.eachFrame,
+    0,
+    demon.frameWidth,
+    demon.frameHeigth,
+    demon.xPos,
+    demon.yPos,
+    demon.frameWidth * demon.scale,
+    demon.frameHeigth * demon.scale
   )
 }
 
@@ -67,23 +89,27 @@ frame()
 
 const moves = {
   WalkDown: () => {
-    eachFrame = 2 * frameWidth
-    yPos += 10
+    player.eachFrame = 2 * player.frameWidth
+    player.yPos += 10
+    if (player.yPos === demon.yPos) {
+      console.log("oi")
+    }
+    
     animate()
   },
   walkUp: () => {
-    eachFrame = 0 * frameWidth
-    yPos -= 10
+    player.eachFrame = 0 * player.frameWidth
+    player.yPos -= 10
     animate() 
   },
   walkLeft: () => {
-    eachFrame = 1 * frameWidth
-    xPos -= 10
+    player.eachFrame = 1 * player.frameWidth
+    player.xPos -= 10
     animate()
   },
   walkRight: () => {
-    eachFrame = 3 * frameWidth
-    xPos += 10
+    player.eachFrame = 3 * player.frameWidth
+    player.xPos += 10
     animate()
   }
 
