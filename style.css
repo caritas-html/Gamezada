@@ -1,0 +1,24 @@
+#game__box {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.path {
+  height: 40px;
+  width: 40px;
+  background: url("./assets/grass.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.limit__wall {
+  height: 40px;
+  width: 40px;
+  background: url("./assets/floor.png");
+  background-position: center;
+  background-size: cover;
+}
+
+#canvas {
+  position: absolute;
+}
