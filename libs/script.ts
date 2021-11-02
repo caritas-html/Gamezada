@@ -1,6 +1,55 @@
+import * as Sprites from './assets'
+
 const gameBox = document.getElementById("game__box")
-const canvas = document.getElementById("canvas")
-const context = canvas.getContext("2d")
+const canvas = document.getElementById("canvas") as HTMLCanvasElement
+
+const { drawImage, clearRect } = canvas.getContext("2d")
+
+type Dimensions = Map<'rows' | 'columns', number>
+type Rows = number
+type Columns = number
+
+type T2DMap = any[]
+
+interface ITileMap {
+  dimensions: Dimensions
+}
+
+interface ISceneConfig {
+  matrix: T2DMap
+}
+
+const useDimensions = (dimensionsMap: Dimensions): [Rows, Columns] => {
+  const { get } = dimensionsMap
+  
+  return [get('rows'), get('columns')]
+}
+
+type TRenderFunction = (config: ISceneConfig) => void
+const buildSceneMatrix = (dimensions: Dimensions, render: TRenderFunction) => {
+  const [rows, columns] = useDimensions(dimensions)
+
+  let matrix = []
+  
+
+  for (let row = 0; row < rows; row++) {
+    for (let column = 0; column < columns; column++) {
+      render({
+        matrix
+      })
+    }
+  }
+}
+
+const buildSceneLayer: (o: ITileMap) => void = (options) => {
+  let matrix = []
+
+  for (let row = 0; row < options.dimensions.get('rows'); row++) {
+    for (let column = 0; column < options.dimensions.get('columns'); column++) {
+
+    }
+  }
+}
 
 const generateMap = (lines, columns) => {
   let twoDimensionMap = []
@@ -42,10 +91,10 @@ let yPos = 3
 let eachFrame = 0
 
 const spriteSheet = new Image()
-spriteSheet.src = "assets/walk.png"
+spriteSheet.src = Sprites.Walk
 
 const animate = () => {
-  context.drawImage(
+  drawImage(
     spriteSheet,
     eachFrame,
     0,
@@ -59,11 +108,10 @@ const animate = () => {
 }
 
 const frame = () => {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  clearRect(0, 0, canvas.width, canvas.height);
   animate()
   requestAnimationFrame(frame)
 }
-frame()
 
 const moves = {
   WalkDown: () => {
@@ -86,18 +134,24 @@ const moves = {
     xPos += 10
     animate()
   }
-
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowDown") {
-    moves.WalkDown()
-  } else if (e.key === "ArrowUp") {
-    moves.walkUp()
-  } else if (e.key === "ArrowLeft") {
-    moves.walkLeft()
-  } else if (e.key === "ArrowRight") {
-    moves.walkRight()
-  }
-})
+const listenInputs = () => {
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") {
+      moves.WalkDown()
+    } else if (e.key === "ArrowUp") {
+      moves.walkUp()
+    } else if (e.key === "ArrowLeft") {
+      moves.walkLeft()
+    } else if (e.key === "ArrowRight") {
+      moves.walkRight()
+    }
+  })
+}
+
+export const initGame = () => {
+  frame()
+  listenInputs()
+}
 
