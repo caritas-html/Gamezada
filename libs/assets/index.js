@@ -1,0 +1,5 @@
+export { default as Character } from './sprites/character.png'
+export { default as Demon } from './sprites/demonio.png'
+export { default as Floor } from './sprites/floor.png'
+export { default as Grass } from './sprites/grass.png'
+export { default as Walk } from './sprites/walk.png'
